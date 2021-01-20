@@ -12,18 +12,10 @@ RUN yarn --silent
 
 COPY . /app
 
+ARG REACT_APP_API
+
 RUN yarn build
-
-FROM nginx:1.17.8-alpine
-
-COPY --from=dev /app/build /usr/share/nginx/html
-
-RUN rm /etc/nginx/conf.d/default.conf
-
-COPY nginx/nginx.conf /etc/nginx/conf.d
 
 EXPOSE 80
 
-# APP_API should point to the api
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD [ "yarn", "run", "start:prod" ]

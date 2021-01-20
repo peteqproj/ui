@@ -27,6 +27,8 @@ jobs:
         with:
           push: true
           tags: peteqproj/peteq-ui:latest
+          build-args: |
+            REACT_APP_API=http://10.152.183.114
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

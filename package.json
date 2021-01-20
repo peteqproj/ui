@@ -13,6 +13,7 @@
     "bluebird": "^3.7.2",
     "chance": "^1.1.7",
     "clsx": "^1.1.1",
+    "express": "^4.17.1",
     "lodash": "^4.17.20",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
@@ -23,8 +24,8 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start-dev": "PORT=3000 APP_API=http://localhost:8080 react-scripts start",
+    "start:prod": "node server",
+    "start:dev": "PORT=3000 REACT_APP_API=http://localhost:8080 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
