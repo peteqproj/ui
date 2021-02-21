@@ -24,6 +24,6 @@ jobs:
           push: true
           tags: peteqproj/peteq:${{ github.event.pull_request.head.sha }}
           build-args: |
-            REACT_APP_API=http://localhost
+            REACT_APP_API=https://localhost
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

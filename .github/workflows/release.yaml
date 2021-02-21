@@ -32,6 +32,6 @@ jobs:
             peteqproj/peteq-ui:${{ env.VERSION }}
             peteqproj/peteq-ui:latest
           build-args: |
-            REACT_APP_API=http://localhost
+            REACT_APP_API=https://localhost
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
