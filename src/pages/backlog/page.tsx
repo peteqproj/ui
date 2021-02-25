@@ -225,6 +225,7 @@ export function BacklogPage(props: IProps) {
               task={taskEdit as Task}
               TaskAPI={props.TaskAPI}
               ListAPI={props.ListAPI}
+              ProjectAPI={props.ProjectAPI}
             />
           }
         />
@@ -256,6 +257,7 @@ export function BacklogPage(props: IProps) {
               task={{ metadata: { id: '', name: '', description: '' }, spec: {}, status: { completed: false } }}
               TaskAPI={props.TaskAPI}
               ListAPI={props.ListAPI}
+              ProjectAPI={props.ProjectAPI}
             />
           }
           />

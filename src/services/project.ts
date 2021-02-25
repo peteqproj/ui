@@ -6,10 +6,12 @@ export interface Project {
         name: string;
         description: string;
         id: string;
+    },
+    spec: {
         color: string;
         imageUrl: string;
-    },
-    tasks: string[];
+        tasks: string[];
+    }
 }
 
 export interface CreateProjectRequestBody {

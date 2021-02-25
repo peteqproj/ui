@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import { Task as TaskModal, TaskAPI } from './../../services/tasks';
+import { ProjectAPI } from './../../services/project';
 import { ListAPI } from './../../services/list';
 import { TaskTitle } from './title';
 import { TaskDescription } from './description';
@@ -36,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface IProps {
     task: TaskModal;
+    ProjectAPI: ProjectAPI;
     TaskAPI: TaskAPI;
     ListAPI: ListAPI;
     projects: { name: string, id: string }[];
@@ -114,6 +116,8 @@ export function Task(props: IProps) {
                                 const name = get(ev, 'destination.title');
                                 updateSelectedProject({ id, name });
                                 updateProjectHasSet(false);
+                                console.log('Adding task to project', id, task.metadata.id)
+                                await props.ProjectAPI.addTasks(id, [task.metadata.id])
                                 props.onChange();
                             }}
                             key={selectedProject.name}
