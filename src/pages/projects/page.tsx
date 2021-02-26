@@ -151,7 +151,7 @@ export function ProjectsPage(props: IProps) {
                     {row.project.metadata.description}
                   </TableCell>
                   <TableCell key={'c-3'}>
-                    {row.project.spec.tasks.length}
+                    {row.tasks.length}
                   </TableCell>
                 </TableRow>
               );
@@ -192,7 +192,7 @@ export function ProjectsPage(props: IProps) {
             setProjectModalOpen(false)
             const row: Row = {
               project,
-              objects: [],
+              tasks: [],
             }
             addProject(row)
           }} ProjectAPI={props.ProjectAPI}></ProjectModal>

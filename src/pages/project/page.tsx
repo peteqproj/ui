@@ -46,17 +46,24 @@ export function ProjectPage(props: IProps) {
   const projectId = (props.match.params as any)['id'];
   const [lists, updateLists] = useState<List[]>([])
   const [state, setState] = useState({
-    metadata: {
-      name: '',
-      id: '',
-      description: '',
-      color: '',
-      imageUrl: '',
-    }, tasks: []
+    project: {
+      metadata: {
+        name: '',
+        id: '',
+        description: '',
+      },
+      spec: {
+        tasks: [],
+        color: '',
+        imageUrl: '',
+      }
+    },
+    tasks:[],
   } as ProjectView);
   useEffect(() => {
     const fetch = async () => {
       const prj = await props.ProjectViewAPI.get(projectId)
+      console.log(prj)
       setState(prj)
       const l = await props.ListAPI.list()
       updateLists(l);
@@ -68,12 +75,12 @@ export function ProjectPage(props: IProps) {
   return (
     <Card className={classes.root} >
       <CardContent className={classes.content}>
-        <CardHeader component={() => (<Chip style={{ width: '70px', backgroundColor: state.metadata.color }} />)} />
+        <CardHeader component={() => (<Chip style={{ width: '70px', backgroundColor: state.project.spec.color }} />)} />
         <Typography gutterBottom variant="h3" component="h2">
-          {state.metadata.name}
+          {state.project.metadata.name}
         </Typography>
         <Typography variant="body1" color="textSecondary" component="p">
-          {state.metadata.description} {calculateCompleted(state.tasks)} / {state.tasks.length}
+          {state.project.metadata.description} {calculateCompleted(state.tasks)} / {state.project.spec.tasks.length}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           <Progress value={calculateProgress(state.tasks)} />
@@ -104,9 +111,9 @@ export function ProjectPage(props: IProps) {
           />
         </Typography>
       </CardContent>
-      {state.metadata.imageUrl !== '' && <CardMedia
+      {state.project.spec.imageUrl !== '' && <CardMedia
         className={classes.media}
-        image={state.metadata.imageUrl}
+        image={state.project.spec.imageUrl}
         title="Contemplative Reptile"
       />}
       <Fab
@@ -120,15 +127,16 @@ export function ProjectPage(props: IProps) {
                   const view = await props.ProjectViewAPI.get(projectId);
                   setState(view);
                 }}
-                defaultProject={{ name: state.metadata.name, id: state.metadata.id }}
+                defaultProject={{ name: state.project.metadata.name, id: state.project.metadata.id }}
                 projects={[
-                  { name: state.metadata.name, id: state.metadata.id }
+                  { name: state.project.metadata.name, id: state.project.metadata.id }
                 ]}
                 lists={lists.map(l => ({ name: l.metadata.name, id: l.metadata.id }))}
                 new={true}
                 task={{ metadata: { id: '', name: '', description: '' }, spec: {}, status: { completed: false } }}
                 TaskAPI={props.TaskAPI}
                 ListAPI={props.ListAPI}
+                ProjectAPI={props.ProjectAPI}
               />
             }
           />

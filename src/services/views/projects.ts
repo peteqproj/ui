@@ -4,7 +4,7 @@ import { Task } from '../tasks';
 
 export interface ProjectView {
     project: Project;
-    objects: Task[];
+    tasks: Task[];
 }
 
 export interface ProjectsViewModel {

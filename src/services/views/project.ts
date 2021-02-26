@@ -2,14 +2,20 @@ import http from '../http';
 import { Task } from '../tasks';
 
 export interface ProjectView {
-    metadata: {
-        name: string;
-        description: string;
-        id: string;
-        color: string;
-        imageUrl: string;
+    project: {
+        metadata: {
+            name: string;
+            description: string;
+            id: string;
+        },
+        spec: {
+            tasks: string[];
+            color: string;
+            imageUrl: string;
+        }
     },
-    tasks: Task[];
+    tasks: Task[],
+
 }
 
 export interface ProjectViewAPI {
