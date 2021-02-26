@@ -187,7 +187,7 @@ export function HomePage(props: IProps) {
                                                                 ref={provided.innerRef}
                                                                 className={classes.card}
                                                                 style={{
-                                                                    borderLeftColor: get(task, 'project.metadata.color', 'gray'),
+                                                                    borderLeftColor: get(task, 'project.spec.color', 'gray'),
                                                                     ...provided.draggableProps.style
                                                                 }}>
                                                                 <CardContent>
@@ -261,6 +261,7 @@ export function HomePage(props: IProps) {
                                 task={taskModal}
                                 TaskAPI={props.TaskAPI}
                                 ListAPI={props.ListAPI}
+                                ProjectAPI={props.ProjectAPI}
                             />
                         }
                     />

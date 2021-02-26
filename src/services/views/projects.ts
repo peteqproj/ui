@@ -2,8 +2,9 @@ import http from '../http';
 import { Project } from '../project';
 import { Task } from '../tasks';
 
-export interface ProjectView extends Project {
-    objects: Task[];
+export interface ProjectView {
+    project: Project;
+    tasks: Task[];
 }
 
 export interface ProjectsViewModel {

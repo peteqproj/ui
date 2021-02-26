@@ -131,24 +131,24 @@ export function ProjectsPage(props: IProps) {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell key={'c-00'} style={{
-                      backgroundColor: row.metadata.color || 'gray',
+                      backgroundColor: row.project.spec.color || 'gray',
                       width: '2px'
                     }}>
                   </TableCell>
                   <TableCell key={'c-0'}>
                   <Tooltip title={"Open"} aria-label={"open"}>
-                      <Link to={`/projects/${row.metadata.id}`}>
-                        <IconButton aria-label="toggleProjetView" color="primary" id={row.metadata.id}>
+                      <Link to={`/projects/${row.project.metadata.id}`}>
+                        <IconButton aria-label="toggleProjetView" color="primary" id={row.project.metadata.id}>
                           <OpenInNewIcon/>
                         </IconButton>
                       </Link>
                     </Tooltip>
                   </TableCell>
                   <TableCell key={'c-1'}>
-                    {row.metadata.name}
+                    {row.project.metadata.name}
                   </TableCell>
                   <TableCell key={'c-2'}>
-                    {row.metadata.description}
+                    {row.project.metadata.description}
                   </TableCell>
                   <TableCell key={'c-3'}>
                     {row.tasks.length}
@@ -191,8 +191,8 @@ export function ProjectsPage(props: IProps) {
           <ProjectModal Callback={(project: Project) => {
             setProjectModalOpen(false)
             const row: Row = {
-              ...project,
-              objects: [],
+              project,
+              tasks: [],
             }
             addProject(row)
           }} ProjectAPI={props.ProjectAPI}></ProjectModal>
