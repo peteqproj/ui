@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const morgan = require('morgan')
+const morgan = require('morgan');
 
 app.use(morgan('tiny'))
 
