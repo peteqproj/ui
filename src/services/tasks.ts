@@ -9,8 +9,7 @@ export interface Task {
         name: string;
         description: string;
     },
-    spec: any,
-    status: {
+    spec: {
         completed: boolean
     }
 }

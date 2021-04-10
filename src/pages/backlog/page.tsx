@@ -59,8 +59,8 @@ interface IState {
 }
 
 function makeTaskCompletionButton(row: Row, onClick: (action: string) => void): RowMenuItem {
-  const icon = row.status.completed ? UndoIcon : DoneIcon;
-  const title = !row.status.completed ? 'Complete' : 'Reopen'
+  const icon = row.task.spec.completed ? UndoIcon : DoneIcon;
+  const title = !row.task.spec.completed ? 'Complete' : 'Reopen'
   return {
     title,
     icon,
@@ -106,7 +106,7 @@ export function BacklogPage(props: IProps) {
           let index;
           for (let i = 0; i < prevState.length; i++) {
             const element = prevState[i];
-            if (element.metadata.id === newData.metadata.id) {
+            if (element.task.metadata.id === newData.task.metadata.id) {
               index = i
             }
           }
@@ -123,7 +123,7 @@ export function BacklogPage(props: IProps) {
   }
 
   const deleteTask = async (row: Row): Promise<void> => {
-    await props.TaskAPI.remove(row.metadata.id)
+    await props.TaskAPI.remove(row.task.metadata.id)
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve();
@@ -131,7 +131,7 @@ export function BacklogPage(props: IProps) {
           let index;
           for (let i = 0; i < prevState.length; i++) {
             const element = prevState[i];
-            if (element.metadata.id === row.metadata.id) {
+            if (element.task.metadata.id === row.task.metadata.id) {
               index = i
             }
           }
@@ -157,13 +157,14 @@ export function BacklogPage(props: IProps) {
           { title: "Project" },
         ]}
         data={rows.map(r => {
+          console.log(r)
           return {
             data: [
               {
-                content: r.metadata.name,
+                content: r.task.metadata.name,
               },
               {
-                content: r.metadata.description,
+                content: r.task.metadata.description,
               },
               {
                 content: r.list.name,
@@ -174,19 +175,19 @@ export function BacklogPage(props: IProps) {
             ],
             onClick: (r: number) => {
               updateSelectedTaskIndex(r);
-              updateTaskEdit(rows[r])
+              updateTaskEdit(rows[r].task)
             },
             menu: [
               makeTaskCompletionButton(r, async (action: string) => {
                 if (action === 'Reopen') {
-                  await props.TaskAPI.reopen(r.metadata.id);
+                  await props.TaskAPI.reopen(r.task.metadata.id);
                 }
 
                 if (action === 'Complete') {
-                  await props.TaskAPI.complete(r.metadata.id);
+                  await props.TaskAPI.complete(r.task.metadata.id);
                 }
                 const newRow = cloneDeep(r)
-                newRow.status.completed = !newRow.status.completed
+                newRow.task.spec.completed = !newRow.task.spec.completed
                 onUpdate(newRow, r)
               }),
               {
@@ -254,7 +255,7 @@ export function BacklogPage(props: IProps) {
               projects={state.projects.map(p => ({ name: p.name, id: p.id }))}
               lists={lists.map(l => ({ name: l.metadata.name, id: l.metadata.id }))}
               new={true}
-              task={{ metadata: { id: '', name: '', description: '' }, spec: {}, status: { completed: false } }}
+              task={{ metadata: { id: '', name: '', description: '' }, spec: {completed: false}}}
               TaskAPI={props.TaskAPI}
               ListAPI={props.ListAPI}
               ProjectAPI={props.ProjectAPI}
