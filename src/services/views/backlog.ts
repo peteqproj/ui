@@ -1,7 +1,8 @@
 import http from '../http';
 import { Task } from '../tasks';
 
-export interface BacklogTask extends Task {
+export interface BacklogTask {
+    task: Task;
     list: BacklogList;
     project: BacklogProject;
 }

@@ -91,7 +91,7 @@ export function ProjectPage(props: IProps) {
                 data: [
                   { content: t.metadata.name },
                   { content: t.metadata.description },
-                  { content: t.status.completed ? 'Completed' : '' },
+                  { content: t.spec.completed ? 'Completed' : '' },
                 ],
                 menu: [
                   makeTaskCompletionButton(t, async (index: number, action: string) => {
@@ -133,7 +133,7 @@ export function ProjectPage(props: IProps) {
                 ]}
                 lists={lists.map(l => ({ name: l.metadata.name, id: l.metadata.id }))}
                 new={true}
-                task={{ metadata: { id: '', name: '', description: '' }, spec: {}, status: { completed: false } }}
+                task={{ metadata: { id: '', name: '', description: '' }, spec: { completed: false }}}
                 TaskAPI={props.TaskAPI}
                 ListAPI={props.ListAPI}
                 ProjectAPI={props.ProjectAPI}
@@ -154,7 +154,7 @@ function calculateProgress(tasks: Task[]): number {
 
 function calculateCompleted(tasks: Task[]): number {
   return tasks.reduce((acc, curr) => {
-    if (curr.status.completed) {
+    if (curr.spec.completed) {
       return acc + 1
     }
     return acc;
@@ -162,8 +162,8 @@ function calculateCompleted(tasks: Task[]): number {
 }
 
 function makeTaskCompletionButton(task: Task, onClick: (index: number, action: string) => void): RowMenuItem {
-  const icon = task.status.completed ? UndoIcon : DoneIcon;
-  const action = !task.status.completed ? 'Complete' : 'Reopen';
+  const icon = task.spec.completed ? UndoIcon : DoneIcon;
+  const action = !task.spec.completed ? 'Complete' : 'Reopen';
   return {
     title: action,
     icon: icon,
