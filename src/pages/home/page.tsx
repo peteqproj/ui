@@ -106,13 +106,13 @@ export function HomePage(props: IProps) {
             if (list.metadata.id !== source.droppableId) {
                 return
             }
-            task = list.tasks.splice(source.index, 1)[0]
+            task = list.tasks.splice(source.index, 1)[0].task
         });
         lists.forEach(list => {
             if (list.metadata.id !== destination.droppableId) {
                 return
             }
-            list.tasks.splice(destination.index, 0, task)
+            list.tasks.splice(destination.index, 0, { task })
         })
         const fetchAndUpdate = async () => {
             await props.ListAPI.moveTasks(source.droppableId, destination.droppableId, [task.metadata.id])
@@ -139,7 +139,7 @@ export function HomePage(props: IProps) {
             setNewTaskName('')
             setState((prev) => {
                 const s = cloneDeep(prev);
-                s.lists[index].tasks.push(task)
+                s.lists[index].tasks.push({ task })
                 return s;
             })
 
@@ -148,7 +148,7 @@ export function HomePage(props: IProps) {
 
     const onTaskClick = (task: HomeViewTask, listIndex: number) => {
         setShowTaskModal(true);
-        setTaskModal(task);
+        setTaskModal(task.task);
         setSelectedTaskListIndex(listIndex)
         const id = task.project?.metadata.id;
         if (!id) {
@@ -177,8 +177,8 @@ export function HomePage(props: IProps) {
                                                 {(list.tasks || []).map((task, index) => (
                                                     <Draggable
                                                         index={index}
-                                                        key={task.metadata.id}
-                                                        draggableId={task.metadata.id}>
+                                                        key={task.task.metadata.id}
+                                                        draggableId={task.task.metadata.id}>
                                                         {(provided, snapshot) => (
                                                             <Card
                                                                 onClick={() => onTaskClick(task, listIndex)}
@@ -192,7 +192,7 @@ export function HomePage(props: IProps) {
                                                                 }}>
                                                                 <CardContent>
                                                                     <Typography variant="body2" component="p">
-                                                                        {task.metadata.name}
+                                                                        {task.task.metadata.name}
                                                                     </Typography>
                                                                 </CardContent>
                                                             </Card>

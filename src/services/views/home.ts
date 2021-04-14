@@ -14,7 +14,8 @@ interface HomeViewList {
     tasks: HomeViewTask[];
 }
 
-export interface HomeViewTask extends Task {
+export interface HomeViewTask {
+    task: Task;
     project?: Project;
 }
 
