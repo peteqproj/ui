@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: peteqproj/peteq:${{ github.event.pull_request.head.sha }}
+          tags: peteqproj/peteq-ui:${{ github.event.pull_request.head.sha }}
           build-args: |
             REACT_APP_API=https://localhost
       - name: Image digest

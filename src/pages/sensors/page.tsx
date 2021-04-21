@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { Table as TableComponent } from './../../components/table';
+import { Table as TableComponent } from '../../components/table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
-import { TriggersViewAPI, TriggerView } from './../../services/views/triggers';
+import { SensorsViewAPI, SensorView } from '../../services/views/sensors';
 
 interface IProps {
     data: string;
-    TriggersViewAPI: TriggersViewAPI;
+    SensorsViewAPI: SensorsViewAPI;
 }
 
-interface RowItem extends TriggerView {};
+interface RowItem extends SensorView {};
 
-export function TriggersPage(props: IProps) {
+export function SensorsPage(props: IProps) {
     const [rows, updateRows] = useState<RowItem[]>([]);
     useEffect(() => {
         const fetch = async () => {
-          const res = await props.TriggersViewAPI.get()
-          updateRows(res.triggers)
+          const res = await props.SensorsViewAPI.get()
+          updateRows(res.sensors)
         };
         fetch();
       }, []);
