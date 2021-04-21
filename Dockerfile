@@ -1,4 +1,4 @@
-FROM node:14.16.0-alpine3.12 AS dev
+FROM node:fermium-alpine3.12 AS dev
 
 WORKDIR /app
 
